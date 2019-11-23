@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Operator(ABC):
     """Abstract class for a generic binary operator."""
 
-    def __str__():
+    def __str__(self):
         """
         Returns a string representation of the operator.
         Should be overriden in subclasses.
@@ -12,7 +12,7 @@ class Operator(ABC):
         return " "
 
     @abstractmethod
-    def apply(a, b):
+    def apply(self, a, b):
         """
         Applies the operator to two integers.
 
@@ -24,19 +24,19 @@ class Operator(ABC):
         Raises:
             ArithmeticError if the operator can not be applied
         """
-        raise NotImplementedError
+        pass
 
 
 class Add(Operator):
     """Addition operator."""
 
-    def __str__():
+    def __str__(self):
         """
         Returns a string representation of the operator.
         """
         return " + "
 
-    def apply(a, b):
+    def apply(self, a, b):
         """
         Applies the addition operator to two integers.
 
@@ -49,16 +49,16 @@ class Add(Operator):
         return a + b
 
 
-class Subtracxt(Operator):
+class Subtract(Operator):
     """Subtraction operator."""
 
-    def __str__():
+    def __str__(self):
         """
         Returns a string representation of the operator.
         """
         return " - "
 
-    def apply(a, b):
+    def apply(self, a, b):
         """
         Applies the subtraction operator to two integers.
 
@@ -74,13 +74,13 @@ class Subtracxt(Operator):
 class Multiply(Operator):
     """Multiplication operator."""
 
-    def __str__():
+    def __str__(self):
         """
         Returns a string representation of the operator.
         """
         return " * "
 
-    def apply(a, b):
+    def apply(self, a, b):
         """
         Applies the multiplication operator to two integers.
 
@@ -96,13 +96,13 @@ class Multiply(Operator):
 class Divide(Operator):
     """Division operator."""
 
-    def __str__():
+    def __str__(self):
         """
-        Returns a single-character string representation of the operator.
+        Returns a string representation of the operator.
         """
         return " / "
 
-    def apply(a, b):
+    def apply(self, a, b):
         """
         Applies the division operator to two integers.
 
@@ -115,4 +115,9 @@ class Divide(Operator):
             ArithmeticError if b does not divide a
             ZeroDivisionError if b has the value 0
         """
-        return a / b
+        if b == 0:
+            raise ZeroDivisionError
+        if a % b != 0:
+            raise ArithmeticError
+        return int(a / b)
+
