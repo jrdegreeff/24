@@ -35,7 +35,7 @@ class Board():
             if not isinstance(operator, op.Operator):
                 raise TypeError
         parses = self.parse(self.cards, operators)
-        pprint(list(filter(lambda p: parses[p] == self.target, parses.keys())))
+        return list(filter(lambda p: parses[p] == self.target, parses.keys()))
 
     def parse(self, operands, operators):
         """
@@ -52,11 +52,11 @@ class Board():
             if len(operands) <= 1:
                 return operands
             parses = []
-            for p in it.permutations(range(len(operands)), 2):
+            for p in it.permutations(range(len(operands)), 2):  # Each pair of distinct indices.
                 remaining = [x for i, x in enumerate(operands) if i not in p]
                 for o in operators:
-                    parses += helper(remaining + [op.Operator_Tree(
-                        o, operands[p[0]], operands[p[1]])], operators)
+                    if not o.is_commutative() or p[0] < p[1]:  # Avoid redundancy of commutative operators.
+                        parses += helper(remaining + [op.Operator_Tree(o, operands[p[0]], operands[p[1]])], operators)
             return parses
 
         result = {}
@@ -71,5 +71,6 @@ class Board():
 
 
 if __name__ == '__main__':
-    b = Board()
-    b.solve()
+    result = Board().solve()
+    print(len(result), "Solutions:")
+    pprint(result)

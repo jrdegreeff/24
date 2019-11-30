@@ -26,6 +26,16 @@ class Operator(ABC):
         """
         pass
 
+    def is_commutative(self):
+        """
+        Flag for commutativity to cut down on redundant permuatations.
+        Any commuatative operator should override this method.
+
+        Returns:
+            (bool) True if the operator is commutative, False otherwise
+        """
+        return False
+
 
 class Add(Operator):
     """Addition operator."""
@@ -47,6 +57,15 @@ class Add(Operator):
             (int) the value of a + b
         """
         return a + b
+
+    def is_commutative(self):
+        """
+        Flag for commutativity to cut down on redundant permuatations.
+
+        Returns:
+            (bool) True
+        """
+        return True
 
 
 class Subtract(Operator):
@@ -91,6 +110,15 @@ class Multiply(Operator):
             (int) the value of a * b
         """
         return a * b
+
+    def is_commutative(self):
+        """
+        Flag for commutativity to cut down on redundant permuatations.
+
+        Returns:
+            (bool) True
+        """
+        return True
 
 
 class Divide(Operator):
