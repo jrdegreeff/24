@@ -7,7 +7,9 @@ import random
 class Board():
     """Represtents a collection of cards for the 24 game."""
 
-    def __init__(self, deck=[x for x in range(1, 14)] * 4, size=4, target=24):
+    STANDARD_DECK = [x for x in range(1, 14)] * 4
+
+    def __init__(self, deck=STANDARD_DECK, size=4, target=24):
         """
         Initializes the board with a random list of cards.
 
@@ -18,6 +20,13 @@ class Board():
         """
         self.cards = random.sample(list(deck), size)
         self.target = target
+
+    def get_cards(self):
+        """
+        Returns:
+            (list) a copy of the cards on the Board
+        """
+        return self.cards.copy()
 
     def solve(self, operators={op.Add(), op.Subtract(), op.Multiply(), op.Divide()}):
         """
@@ -71,6 +80,8 @@ class Board():
 
 
 if __name__ == '__main__':
-    result = Board().solve()
+    board = Board()
+    print("Cards:", board.get_cards())
+    result = board.solve()
     print(len(result), "Solutions:")
     pprint(result)
